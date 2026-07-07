@@ -1,7 +1,7 @@
 /* =====================================================================
    ULURA — Menu page
    ===================================================================== */
-:root { --navh: 62px; --catnavh: 60px; }
+:root { --navh: 57px; --catnavh: 58px; }
 
 .menu-page { background: var(--paper); }
 
@@ -16,9 +16,9 @@
 .m-hero .blob--1 { width: 40vw; height: 40vw; top: -14vw; right: -10vw; background: var(--green-600); opacity: 0.5; }
 .m-hero > .container { position: relative; z-index: 2; }
 .m-hero__back {
-  display: inline-flex; align-items: center; gap: 0.5rem;
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px;
   color: var(--on-brand-muted); font-weight: 600; font-size: var(--fs-200);
-  margin-bottom: 1.4rem; transition: gap var(--dur-2) var(--ease-out), color var(--dur-1);
+  margin-bottom: 1rem; transition: gap var(--dur-2) var(--ease-out), color var(--dur-1);
 }
 .m-hero__back svg { width: 1.05em; height: 1.05em; }
 .m-hero__back:hover { color: var(--cream); gap: 0.75rem; }
@@ -34,12 +34,13 @@
 }
 .m-catnav__scroll {
   display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none;
-  padding-block: 0.7rem; scroll-padding-inline: 1rem;
+  padding-block: 0.45rem; scroll-padding-inline: 1rem;
 }
 .m-catnav__scroll::-webkit-scrollbar { display: none; }
 .m-pill {
   flex: none; white-space: nowrap;
-  padding: 0.5rem 0.95rem; border-radius: 999px;
+  display: inline-flex; align-items: center; min-height: 44px;
+  padding: 0.4rem 1rem; border-radius: 999px;
   font-size: var(--fs-100); font-weight: 600; color: var(--fg-muted);
   background: var(--green-50); box-shadow: inset 0 0 0 1px transparent;
   transition: color var(--dur-1), background var(--dur-1), box-shadow var(--dur-1);

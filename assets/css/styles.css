@@ -29,7 +29,7 @@
   --sand:    oklch(0.910 0.020 80);
   --paper:   oklch(0.988 0.006 120);    /* body bg — whisper of green, low chroma */
   --ink:     oklch(0.255 0.020 150);    /* primary text on light */
-  --ink-soft:oklch(0.430 0.022 150);    /* secondary text on light (>=4.5:1) */
+  --ink-soft:oklch(0.400 0.024 150);    /* secondary text on light (~8.7:1) */
   --line:    oklch(0.885 0.012 135);    /* hairlines on light */
 
   /* --- Semantic --- */
@@ -117,7 +117,9 @@ img, svg, video { display: block; max-width: 100%; }
 img { height: auto; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; cursor: pointer; background: none; border: none; }
-:focus-visible { outline: 3px solid var(--coral-cta); outline-offset: 3px; border-radius: 4px; }
+/* Focus ring: coral outline + soft light halo so it reads on light AND dark. */
+:focus-visible { outline: 3px solid var(--coral-cta); outline-offset: 2px; box-shadow: 0 0 0 6px oklch(1 0 0 / 0.35); border-radius: 6px; }
+.on-dark :focus-visible, .nav :focus-visible { box-shadow: 0 0 0 6px oklch(1 0 0 / 0.45); }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
@@ -148,7 +150,7 @@ p { text-wrap: pretty; }
 .on-dark .eyebrow { color: var(--coral-100); }
 .on-dark .eyebrow::before { background: var(--coral); }
 
-.lead { font-size: var(--fs-400); color: var(--fg-muted); line-height: 1.55; max-width: 60ch; }
+.lead { font-size: var(--fs-400); color: var(--fg-muted); line-height: 1.62; max-width: 60ch; }
 .on-dark .lead { color: var(--on-brand-muted); }
 
 /* Wordmark rendered as text (matches display font, crisp, themeable) */
@@ -195,7 +197,7 @@ p { text-wrap: pretty; }
 .on-dark .btn--ghost:hover { --btn-bg: oklch(1 0 0 / 0.08); box-shadow: inset 0 0 0 1.5px var(--cream); }
 
 .link-arrow {
-  display: inline-flex; align-items: center; gap: 0.5rem;
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px;
   font-weight: 600; color: var(--brand);
   transition: gap var(--dur-2) var(--ease-out);
 }
@@ -210,16 +212,18 @@ p { text-wrap: pretty; }
   position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav);
   display: flex; align-items: center; justify-content: space-between;
   gap: var(--sp-4);
-  padding: 0.85rem clamp(1.15rem, 5vw, 3rem);
+  padding: 0.4rem clamp(1.15rem, 5vw, 3rem);
   transition: background var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), padding var(--dur-2) var(--ease-out);
 }
-.nav__brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--on-brand); }
-.nav__brand img { width: 40px; height: 40px; border-radius: 50%; filter: drop-shadow(0 1px 3px oklch(0.2 0.03 150 / 0.28)); }
-.nav__brand .wordmark { font-size: 1.15rem; }
+.nav__brand { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--on-brand); }
+.nav__brand img { width: 32px; height: 32px; border-radius: 50%; filter: drop-shadow(0 1px 3px oklch(0.2 0.03 150 / 0.28)); }
+.nav__brand .wordmark { font-size: 1.02rem; }
 .nav__links { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.2rem); }
-.nav__links a { font-weight: 500; font-size: var(--fs-200); color: var(--on-brand); opacity: 0.9; transition: opacity var(--dur-1); }
+.nav__links a { font-weight: 500; font-size: var(--fs-200); color: var(--on-brand); opacity: 0.9; transition: opacity var(--dur-1); padding-block: 0.5rem; }
 .nav__links a:hover { opacity: 1; }
 .nav__cta { display: inline-flex; gap: 0.6rem; align-items: center; }
+/* compact nav buttons: slimmer bar, still >=44px touch target */
+.nav .btn { min-height: 44px; padding: 0.5rem 1.15rem; font-size: var(--fs-100); }
 
 /* scrolled state: solid cream bar, dark text */
 .nav.is-scrolled {
@@ -267,6 +271,11 @@ p { text-wrap: pretty; }
 @media (max-width: 720px) {
   .footer__grid { grid-template-columns: 1fr 1fr; }
   .footer__brand { grid-column: 1 / -1; }
+}
+/* comfortable tap targets for footer links on touch screens */
+@media (max-width: 860px) {
+  .footer li a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer ul { gap: 0.35rem; }
 }
 
 /* ------------------------------------------------------------------ */
@@ -365,6 +374,9 @@ p { text-wrap: pretty; }
   .hero__eyebrow, .hero .eyebrow { justify-content: center; }
   .hero__sub { margin-inline: auto; }
   .hero__cta, .hero__trust { justify-content: center; }
+  /* full-width, unmistakable primary action on mobile */
+  .hero__cta { flex-direction: column; align-items: stretch; gap: 0.7rem; }
+  .hero__cta .btn { width: 100%; }
   .hero__media { order: -1; margin-bottom: 1rem; }
   .hero__badge { left: auto; right: -6%; }
   .hero__scroll { display: none; }
@@ -457,6 +469,7 @@ p { text-wrap: pretty; }
 .visit__ico svg { width: 22px; height: 22px; }
 .visit__item h4 { font-family: var(--font-body); font-size: var(--fs-100); text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-muted); margin-bottom: 0.15rem; }
 .visit__item p, .visit__item a { font-size: var(--fs-400); font-weight: 600; color: var(--fg); }
+.visit__item a { display: inline-flex; align-items: center; min-height: 44px; }
 .visit__item a:hover { color: var(--brand); }
 .visit__cta { margin-top: var(--sp-5); display: flex; flex-wrap: wrap; gap: 0.8rem; }
 /* stylized map panel (no external embed) */
@@ -489,11 +502,12 @@ p { text-wrap: pretty; }
     display: grid; grid-template-columns: repeat(3, 1fr);
     background: oklch(0.988 0.006 120 / 0.95); backdrop-filter: blur(12px);
     box-shadow: 0 -1px 0 var(--line), 0 -8px 24px -12px oklch(0.3 0.03 150 / 0.25);
-    padding: 0.5rem 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
-    gap: 0.4rem;
+    padding: 0.3rem 0.4rem calc(0.3rem + env(safe-area-inset-bottom));
+    gap: 0.35rem;
   }
-  .actionbar a { display: grid; place-items: center; gap: 0.2rem; padding: 0.5rem; border-radius: 12px; font-size: 0.72rem; font-weight: 600; color: var(--ink); min-height: 48px; }
-  .actionbar a svg { width: 20px; height: 20px; }
+  /* slimmer bar: tighter chrome, icon+label inline, tap target still >=44px */
+  .actionbar a { display: flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.4rem; border-radius: 10px; font-size: 0.78rem; font-weight: 600; color: var(--ink); min-height: 44px; }
+  .actionbar a svg { width: 18px; height: 18px; }
   .actionbar a.is-primary { background: var(--coral-cta); color: #fff; }
-  body { padding-bottom: 68px; }
+  body { padding-bottom: 56px; }
 }
