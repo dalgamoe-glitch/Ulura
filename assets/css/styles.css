@@ -212,12 +212,13 @@ p { text-wrap: pretty; }
   position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav);
   display: flex; align-items: center; justify-content: space-between;
   gap: var(--sp-4);
-  padding: 0.4rem clamp(1.15rem, 5vw, 3rem);
-  transition: background var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), padding var(--dur-2) var(--ease-out);
+  height: 50px; padding: 0 clamp(1.15rem, 5vw, 3rem);
+  transition: background var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
 }
-.nav__brand { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; color: var(--on-brand); }
-.nav__brand img { width: 32px; height: 32px; border-radius: 50%; filter: drop-shadow(0 1px 3px oklch(0.2 0.03 150 / 0.28)); }
-.nav__brand .wordmark { font-size: 1.02rem; }
+/* tap targets stay >=44px but sit INSIDE the slim 50px bar */
+.nav__brand { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 44px; color: var(--on-brand); }
+.nav__brand img { width: 30px; height: 30px; border-radius: 50%; filter: drop-shadow(0 1px 3px oklch(0.2 0.03 150 / 0.28)); }
+.nav__brand .wordmark { font-size: 1rem; }
 .nav__links { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.2rem); }
 .nav__links a { font-weight: 500; font-size: var(--fs-200); color: var(--on-brand); opacity: 0.9; transition: opacity var(--dur-1); padding-block: 0.5rem; }
 .nav__links a:hover { opacity: 1; }
