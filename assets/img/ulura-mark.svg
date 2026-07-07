@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ULURA">
+  <!-- Organic rounded tile in ULURA olive green -->
+  <rect x="2" y="2" width="60" height="60" rx="18" fill="#3a4a32"/>
+  <!-- Cup-shaped U monogram in cream -->
+  <path d="M22 20 v13 a10 10 0 0 0 20 0 V20"
+        fill="none" stroke="#f4efe3" stroke-width="5"
+        stroke-linecap="round"/>
+  <!-- Saucer line -->
+  <path d="M20 48 h24" fill="none" stroke="#f4efe3" stroke-width="5" stroke-linecap="round"/>
+  <!-- Rising steam / coral accent dot -->
+  <circle cx="32" cy="13" r="2.6" fill="#e2543b"/>
+</svg>

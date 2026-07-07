@@ -1,0 +1,108 @@
+/* =====================================================================
+   ULURA — Menu page
+   ===================================================================== */
+:root { --navh: 62px; --catnavh: 60px; }
+
+.menu-page { background: var(--paper); }
+
+/* -------------------- MENU HERO -------------------- */
+.m-hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: radial-gradient(120% 120% at 15% -10%, var(--green-700), var(--green-900) 72%);
+  color: var(--on-brand);
+  padding-top: calc(var(--navh) + clamp(2rem, 6vw, 4rem));
+  padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+.m-hero .blob--1 { width: 40vw; height: 40vw; top: -14vw; right: -10vw; background: var(--green-600); opacity: 0.5; }
+.m-hero > .container { position: relative; z-index: 2; }
+.m-hero__back {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  color: var(--on-brand-muted); font-weight: 600; font-size: var(--fs-200);
+  margin-bottom: 1.4rem; transition: gap var(--dur-2) var(--ease-out), color var(--dur-1);
+}
+.m-hero__back svg { width: 1.05em; height: 1.05em; }
+.m-hero__back:hover { color: var(--cream); gap: 0.75rem; }
+.m-hero h1 { color: var(--cream); font-size: var(--fs-800); letter-spacing: -0.035em; margin: 0.8rem 0 1.2rem; }
+.m-hero .lead { color: var(--on-brand-muted); max-width: 54ch; }
+
+/* -------------------- STICKY CATEGORY NAV -------------------- */
+.m-catnav {
+  position: sticky; top: var(--navh); z-index: var(--z-sticky);
+  background: oklch(0.988 0.006 120 / 0.92);
+  backdrop-filter: saturate(1.4) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.m-catnav__scroll {
+  display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none;
+  padding-block: 0.7rem; scroll-padding-inline: 1rem;
+}
+.m-catnav__scroll::-webkit-scrollbar { display: none; }
+.m-pill {
+  flex: none; white-space: nowrap;
+  padding: 0.5rem 0.95rem; border-radius: 999px;
+  font-size: var(--fs-100); font-weight: 600; color: var(--fg-muted);
+  background: var(--green-50); box-shadow: inset 0 0 0 1px transparent;
+  transition: color var(--dur-1), background var(--dur-1), box-shadow var(--dur-1);
+}
+.m-pill:hover { color: var(--brand-deep); background: var(--green-100); }
+.m-pill.is-active { color: #fff; background: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); }
+
+/* -------------------- MENU BODY -------------------- */
+.m-body { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.m-section { padding-block: clamp(1.75rem, 4vw, 2.75rem); scroll-margin-top: calc(var(--navh) + var(--catnavh) + 8px); border-top: 1px solid var(--line); }
+.m-section:first-child { border-top: 0; }
+
+.m-section__head { margin-bottom: var(--sp-5); max-width: 60ch; }
+.m-section__kicker {
+  display: inline-block; font-size: var(--fs-100); font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral-cta);
+  margin-bottom: 0.5rem;
+}
+.m-section__title { font-size: var(--fs-600); }
+.m-section__note { color: var(--fg-muted); margin-top: 0.5rem; font-size: var(--fs-200); }
+
+/* item list: two columns on wide screens */
+.m-list {
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  column-gap: clamp(2rem, 5vw, 4.5rem); row-gap: 0.35rem;
+}
+.m-list--compact { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); row-gap: 0.15rem; }
+@media (max-width: 720px) { .m-list, .m-list--compact { grid-template-columns: 1fr; } }
+
+.m-item { padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
+.m-item__row { display: grid; grid-template-columns: 1fr auto; gap: 1rem; align-items: baseline; }
+.m-item__name { font-family: var(--font-body); font-weight: 700; font-size: var(--fs-300); color: var(--fg); letter-spacing: 0; line-height: 1.3; }
+.m-item__desc { color: var(--fg-muted); font-size: var(--fs-200); line-height: 1.45; margin-top: 0.2rem; max-width: 46ch; }
+
+/* dotted leader between name block and price */
+.m-item__price { position: relative; }
+.m-price { font-family: var(--font-display); font-weight: 600; font-size: var(--fs-300); color: var(--brand-deep); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.m-price em { font-style: normal; font-size: 0.7em; color: var(--fg-muted); font-family: var(--font-body); font-weight: 600; }
+
+.m-sizes { display: inline-flex; gap: 0.4rem; }
+.m-size { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 999px; background: var(--green-50); box-shadow: inset 0 0 0 1px var(--green-200); font-family: var(--font-display); font-weight: 600; font-size: var(--fs-100); color: var(--brand-deep); font-variant-numeric: tabular-nums; }
+.m-size i { font-style: normal; color: var(--coral-cta); font-weight: 700; }
+
+/* options (mojito mixes, sandwich breads) */
+.m-opts { list-style: none; padding: 0.6rem 0 0.2rem; margin: 0.4rem 0 0; display: grid; gap: 0.35rem; border-top: 1px dashed var(--green-200); }
+.m-opts li { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+.m-opt-n { font-size: var(--fs-200); color: var(--fg); font-weight: 500; }
+.m-opts .m-price { font-size: var(--fs-200); }
+.ar { font-family: var(--font-ar); font-size: 0.9em; color: var(--fg-muted); }
+
+/* groups (toppings & extras) */
+.m-group + .m-group { margin-top: var(--sp-5); }
+.m-group__title { font-family: var(--font-body); font-weight: 700; font-size: var(--fs-300); color: var(--brand-deep); margin-bottom: 0.4rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem; }
+.m-group__note { font-family: var(--font-body); font-weight: 500; font-size: var(--fs-100); color: var(--fg-muted); }
+.m-list--compact .m-item { padding: 0.55rem 0; }
+.m-list--compact .m-item__name { font-weight: 600; }
+
+/* -------------------- CLOSING CTA -------------------- */
+.m-closing { background: var(--green-50); border-top: 1px solid var(--line); }
+.m-closing__inner { display: grid; grid-template-columns: 1.4fr 0.6fr; gap: var(--sp-5); align-items: center; }
+.m-closing h2 { font-size: var(--fs-700); margin: 0.8rem 0 1rem; }
+.m-closing__cta { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: flex-end; }
+@media (max-width: 760px) { .m-closing__inner { grid-template-columns: 1fr; } .m-closing__cta { justify-content: flex-start; } }
+
+/* Reveal handling is shared via the `.js [data-reveal]` rules in styles.css. */
