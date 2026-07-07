@@ -1,4 +1,4 @@
-/* ULURA — menu page: render from data, sticky scroll-spy nav, reveals. */
+/* ULURA, menu page: render from data, sticky scroll-spy nav, reveals. */
 (function () {
   "use strict";
   var doc = document;

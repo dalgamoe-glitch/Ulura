@@ -214,7 +214,7 @@ p { text-wrap: pretty; }
   transition: background var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out), padding var(--dur-2) var(--ease-out);
 }
 .nav__brand { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--on-brand); }
-.nav__brand img { width: 34px; height: 34px; }
+.nav__brand img { width: 40px; height: 40px; border-radius: 50%; filter: drop-shadow(0 1px 3px oklch(0.2 0.03 150 / 0.28)); }
 .nav__brand .wordmark { font-size: 1.15rem; }
 .nav__links { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.2rem); }
 .nav__links a { font-weight: 500; font-size: var(--fs-200); color: var(--on-brand); opacity: 0.9; transition: opacity var(--dur-1); }
@@ -250,8 +250,10 @@ p { text-wrap: pretty; }
   display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--sp-5);
   align-items: start;
 }
+.footer__lockup { display: inline-flex; align-items: center; gap: 0.75rem; }
+.footer__lockup img { width: 48px; height: 48px; border-radius: 50%; filter: drop-shadow(0 2px 6px oklch(0.15 0.02 150 / 0.4)); }
 .footer__brand .wordmark { font-size: 1.9rem; color: var(--cream); }
-.footer__tag { color: var(--on-brand-muted); margin-top: 0.8rem; max-width: 34ch; }
+.footer__tag { color: var(--on-brand-muted); margin-top: 0.9rem; max-width: 34ch; }
 .footer h4 { font-family: var(--font-body); font-size: var(--fs-100); text-transform: uppercase; letter-spacing: 0.1em; color: var(--coral-100); margin-bottom: 1rem; }
 .footer ul { list-style: none; padding: 0; display: grid; gap: 0.7rem; }
 .footer a { color: var(--on-brand-muted); transition: color var(--dur-1); }
@@ -330,10 +332,10 @@ p { text-wrap: pretty; }
 .hero__trust b { color: var(--cream); font-weight: 700; }
 .hero__trust .dot { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.5; }
 
-/* Hero image — framed portrait (photos are low-res, keep them contained) */
+/* Hero image — framed high-res portrait */
 .hero__media { position: relative; justify-self: center; }
 .hero__frame {
-  width: min(300px, 74vw); aspect-ratio: 3 / 4;
+  width: min(360px, 78vw); aspect-ratio: 3 / 4;
   border-radius: 160px 160px var(--radius-l) var(--radius-l); /* arch top */
   overflow: hidden; position: relative;
   box-shadow: var(--shadow-l); border: 6px solid oklch(1 0 0 / 0.14);

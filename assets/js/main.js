@@ -1,7 +1,8 @@
-/* ULURA — landing page motion.
+/* ULURA landing page motion.
    Progressive enhancement: without JS the page is fully visible (no html.js
-   class). With JS, reveals use IntersectionObserver + a failsafe so a section
-   can never stay blank. GSAP powers the hero entrance and parallax only. */
+   class). With JS, motion is kept smooth but minimal and scroll-driven:
+   Lenis smooth scroll, gentle scroll reveals (IntersectionObserver + failsafe),
+   a calm hero intro, and a subtle parallax. Full reduced-motion fallback. */
 (function () {
   "use strict";
 
@@ -42,10 +43,10 @@
     });
   });
 
-  /* --- reveals: robust IntersectionObserver + failsafe -------------- */
+  /* --- reveals: robust IntersectionObserver + failsafe (primary motion) -- */
   function reveal(el) { el.classList.add("is-in"); }
   var revealEls = Array.prototype.slice.call(doc.querySelectorAll("[data-reveal]"))
-    .filter(function (el) { return !el.closest(".hero"); }); // hero handled by GSAP
+    .filter(function (el) { return !el.closest(".hero"); }); // hero handled below
 
   if (reduce || !("IntersectionObserver" in window)) {
     revealEls.forEach(reveal);
@@ -68,51 +69,25 @@
     });
   }
 
-  /* --- hero entrance (GSAP) --- */
+  /* --- hero intro: one calm fade + rise, no per-word or overshoot tricks -- */
   if (hasGSAP && !reduce) {
     var gsap = window.gsap;
     if (window.ScrollTrigger) gsap.registerPlugin(window.ScrollTrigger);
 
-    var htitle = doc.querySelector("[data-hero-title]");
-    var tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+    var tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.9 } });
+    tl.from(".hero__eyebrow", { y: 18, opacity: 0 }, 0)
+      .from("[data-hero-title]", { y: 24, opacity: 0 }, 0.08)
+      .from(".hero__sub", { y: 18, opacity: 0 }, 0.2)
+      .from(".hero__cta", { y: 16, opacity: 0 }, 0.32)
+      .from(".hero__trust", { y: 16, opacity: 0 }, 0.42)
+      .from("[data-hero-media]", { y: 28, opacity: 0, duration: 1.1 }, 0.15)
+      .from(".hero__badge", { y: 14, opacity: 0, duration: 0.7 }, 0.7);
 
-    if (htitle) {
-      htitle.setAttribute("aria-label", htitle.textContent.trim());
-      var words = htitle.textContent.trim().split(/\s+/);
-      htitle.innerHTML = words.map(function (w) {
-        var cls = /intention/i.test(w) ? "accent" : "";
-        return '<span class="h-word"><span class="h-word__i ' + cls + '">' + w + "</span></span>";
-      }).join(" ");
-      gsap.set(htitle.querySelectorAll(".h-word"), { display: "inline-block", overflow: "hidden", verticalAlign: "top" });
-      gsap.set(htitle.querySelectorAll(".h-word__i"), { display: "inline-block", yPercent: 120 });
-      tl.to(htitle.querySelectorAll(".h-word__i"), { yPercent: 0, duration: 1, stagger: 0.08 }, 0.1);
-    }
-
-    tl.from(".hero__eyebrow", { y: 20, opacity: 0, duration: 0.8 }, 0)
-      .from(".hero__sub", { y: 20, opacity: 0, duration: 0.8 }, 0.35)
-      .from(".hero__cta", { y: 20, opacity: 0, duration: 0.8 }, 0.5)
-      .from(".hero__trust", { y: 20, opacity: 0, duration: 0.8 }, 0.62)
-      .from("[data-hero-media]", { y: 40, opacity: 0, scale: 0.96, duration: 1.1 }, 0.25)
-      .from(".hero__badge", { scale: 0.6, opacity: 0, duration: 0.7, ease: "back.out(1.7)" }, 0.9);
-
-    // Parallax (decorative — images stay visible if this never runs)
+    // Subtle scroll-driven parallax (decorative; images stay if it never runs).
     if (window.ScrollTrigger) {
-      gsap.to(".hero__frame img", { yPercent: 12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
-      gsap.to(".story__media img", { yPercent: -8, ease: "none", scrollTrigger: { trigger: ".story", start: "top bottom", end: "bottom top", scrub: true } });
+      gsap.to(".hero__frame img", { yPercent: 8, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+      gsap.to(".story__media img", { yPercent: -6, ease: "none", scrollTrigger: { trigger: ".story", start: "top bottom", end: "bottom top", scrub: true } });
       window.addEventListener("load", function () { window.ScrollTrigger.refresh(); });
     }
-  }
-
-  /* --- magnetic accent buttons (fine pointers only) --- */
-  if (hasGSAP && !reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    doc.querySelectorAll(".btn--accent").forEach(function (btn) {
-      btn.addEventListener("pointermove", function (e) {
-        var r = btn.getBoundingClientRect();
-        window.gsap.to(btn, { x: (e.clientX - (r.left + r.width / 2)) * 0.18, y: (e.clientY - (r.top + r.height / 2)) * 0.28, duration: 0.4, ease: "expo.out" });
-      });
-      btn.addEventListener("pointerleave", function () {
-        window.gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1,0.4)" });
-      });
-    });
   }
 })();
