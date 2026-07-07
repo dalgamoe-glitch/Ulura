@@ -90,4 +90,19 @@
       window.addEventListener("load", function () { window.ScrollTrigger.refresh(); });
     }
   }
+
+  /* --- reviews marquee: duplicate the cards so the loop is seamless.
+     Without JS the single set still renders and scrolls; the CSS only
+     animates once "is-cloned" is present, so it never scrolls to blank. --- */
+  (function () {
+    var marq = doc.querySelector("[data-rev-marquee]");
+    var track = marq && marq.querySelector("[data-rev-track]");
+    if (!marq || !track) return;
+    Array.prototype.slice.call(track.children).forEach(function (card) {
+      var dup = card.cloneNode(true);
+      dup.setAttribute("aria-hidden", "true");
+      track.appendChild(dup);
+    });
+    marq.classList.add("is-cloned");
+  })();
 })();

@@ -398,6 +398,73 @@ p { text-wrap: pretty; }
 @media (max-width: 640px){ .proof__row { grid-template-columns: repeat(2,1fr); gap: var(--sp-5) var(--sp-4);} }
 
 /* ==================================================================== */
+/*  9b. REVIEWS MARQUEE                                                 */
+/* ==================================================================== */
+.reviews {
+  background: linear-gradient(180deg, var(--green-800), var(--green-900));
+  color: var(--on-brand); position: relative; overflow: hidden; isolation: isolate;
+  padding-block: var(--sp-7);
+}
+.reviews .blob--5 { width: 42vw; height: 42vw; top: -16vw; left: -12vw; background: var(--green-600); opacity: 0.4; }
+.reviews__head {
+  position: relative; z-index: 2;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 0.6rem 1.4rem; margin-bottom: var(--sp-5);
+}
+.reviews__rating { display: inline-flex; align-items: center; gap: 0.55rem; min-height: 44px; color: var(--on-brand-muted); font-size: var(--fs-200); }
+.reviews__rating .stars { color: var(--coral); letter-spacing: 0.08em; }
+.reviews__rating b { color: var(--cream); font-weight: 700; }
+.reviews__rating:hover { color: var(--cream); }
+
+/* full-bleed track with soft edge fades */
+.rev-marquee {
+  position: relative; z-index: 2; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.rev-track {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; gap: var(--sp-4); width: max-content;
+}
+.rev-marquee.is-cloned .rev-track { animation: rev-marquee 52s linear infinite; }
+.rev-marquee.is-cloned:hover .rev-track,
+.rev-marquee.is-cloned:focus-within .rev-track { animation-play-state: paused; }
+/* before JS clones (or if JS is off): let the row scroll by touch/drag */
+.rev-marquee:not(.is-cloned) { overflow-x: auto; scrollbar-width: none; }
+.rev-marquee:not(.is-cloned)::-webkit-scrollbar { display: none; }
+@keyframes rev-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.rev-card {
+  flex: none; width: min(340px, 82vw);
+  background: var(--surface-warm); color: var(--ink);
+  border-radius: var(--radius-l); padding: 1.4rem 1.5rem;
+  box-shadow: var(--shadow-m);
+  display: grid; gap: 0.85rem; align-content: start;
+}
+.rev-card__stars { color: var(--coral); letter-spacing: 0.12em; font-size: 0.95rem; }
+.rev-card__quote {
+  font-size: var(--fs-300); line-height: 1.5; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden;
+}
+.rev-card__by { display: flex; align-items: center; gap: 0.7rem; }
+.rev-card__avatar {
+  width: 38px; height: 38px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; color: #fff; background: var(--av, var(--brand));
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+}
+.rev-card__meta { display: grid; line-height: 1.25; }
+.rev-card__meta b { font-size: var(--fs-200); color: var(--ink); }
+.rev-card__meta span { font-size: var(--fs-100); color: var(--fg-muted); }
+.rev-card__g { margin-left: auto; align-self: start; display: inline-flex; }
+.rev-card__g svg { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rev-marquee.is-cloned .rev-track { animation: none; }
+  .rev-marquee { overflow-x: auto; scrollbar-width: none; }
+  .rev-marquee::-webkit-scrollbar { display: none; }
+}
+
+/* ==================================================================== */
 /*  10. STORY                                                           */
 /* ==================================================================== */
 .story { overflow: hidden; }  /* clip decorative blob so it never causes page overflow */
